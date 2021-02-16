@@ -1,0 +1,19 @@
+$base-color-aquamarine: #1DB195;
+$base-color-blue: #D9F1F1;
+
+
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  background-color: $base-color-aquamarine;
+  top: 0;
+  padding: 15px
+}
+
+
+footer {
+  background-color: $base-color-aquamarine;
+  height: 175px;
+  position: relative;
+}
