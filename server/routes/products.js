@@ -7,7 +7,7 @@ const {Product} = require('../models/products')
 
 
 router.get('/' ,async(req ,res ,next) => {
-  const products = await Product.find({});
+  const products = await Product.find({} ,'-_id');
   res.products = products;
   return res.json(res.products)
 })

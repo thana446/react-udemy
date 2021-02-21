@@ -18,6 +18,15 @@ class App extends Component {
   }
   }
 
+  componentDidMount() {
+    fetch("http://localhost:3000/products" ,{method: "GET"}).then((res) => res.json()).then((res) => {
+      this.setState({
+        products: res
+      })
+    })
+    
+  }
+
   render() {
     return (
       <div>

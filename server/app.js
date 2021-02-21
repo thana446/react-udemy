@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('./public/javascripts/CorsFilter');
 
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors);
 
 //connect db
 mongoose.connect('mongodb://localhost:27017/react' ,{useNewUrlParser: true})
