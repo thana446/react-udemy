@@ -8,6 +8,7 @@ const cors = require('./public/javascripts/CorsFilter');
 
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
+var ordersRouter = require('./routes/orders');
 
 var app = express();
 
@@ -27,6 +28,7 @@ mongoose.connect('mongodb://localhost:27017/react' ,{useNewUrlParser: true})
 
 app.use('/', indexRouter);
 app.use('/products', productsRouter);
+app.use('/orders', ordersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

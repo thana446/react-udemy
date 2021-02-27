@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
 import ProductList from '../product/ProductList'
 import Calculator from './Calculator'
+import axios from 'axios'
 
 class Monitor extends Component {
     constructor(props) {
         super(props)
         this.state = {
             totalPrice: 0,
-            orders: []
+            orders: [],
+            confirm: false,
+            msg: ''
         }
         this.addOrder = this.addOrder.bind(this)
         this.delOrder = this.delOrder.bind(this)
+        this.confirmOrders = this.confirmOrders.bind(this)
+        this.clearOrders = this.clearOrders.bind(this)
     }
     addOrder = (product) => (test) => () => {
-        console.log(test)
+        // console.log(test)
         let {orders ,totalPrice} = this.state
         let findOrder = orders.find((item) => item.product.productId === product.productId)
         if(findOrder) {
@@ -38,15 +43,51 @@ class Monitor extends Component {
         })
         
     }
+    confirmOrders = () => () => {
+        var self = this
+        const {orders ,totalPrice} = this.state
+        const request = {
+            totalPrice,
+            orders
+        }
+        axios.post("http://localhost:3000/orders" ,request).then(res => {
+            console.log(res.data)
+            this.setState({
+                totalPrice: 0,
+                orders: [],
+                confirm: true,
+                msg: 'บันทึกสำเร็จ'
+            })
+        })
+        
+    }
+    clearOrders() {
+        this.setState({
+            totalPrice: 0,
+            orders: [],
+            confirm: true,
+            msg: 'เคลียร์ข้อมูล'
+        })
+    }
+    componentDidUpdate() {
+        if(this.state.confirm) {
+            setTimeout(() => {
+                this.setState({
+                    confirm: false
+                })
+            },3000)
+        }
+    }
     render() {
         return (
             <div className="container-fluid">
+                {this.state.confirm && (<div className="alert alert-secondary text-right title">{this.state.msg}</div>)}
                 <div className="row">
                     <div className="col-9">
                         <ProductList products={this.props.products} addOrder={this.addOrder} />
                     </div>
                     <div className="col-3">
-                        <Calculator {...this.state} delOrder={this.delOrder} />
+                        <Calculator {...this.state} delOrder={this.delOrder} confirmOrders={this.confirmOrders} clearOrders={this.clearOrders}/>
                     </div>
                 </div>
             </div>)
