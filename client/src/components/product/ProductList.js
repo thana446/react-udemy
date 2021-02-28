@@ -3,7 +3,7 @@ import ProductItem from "./ProductItem"
 
 class ProductList extends Component {
     showProducts() {
-        return this.props.products && this.props.products.map((product) => (<ProductItem key={product.productId} product={product} addOrder={this.props.addOrder}/>))
+        return this.props.products && this.props.products.map((product) => (<ProductItem key={product._id} product={product} addOrder={this.props.addOrder} delProduct={this.props.delProduct} editProduct={this.props.editProduct}/>))
     }
     render() {
         return (

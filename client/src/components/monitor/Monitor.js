@@ -20,7 +20,7 @@ class Monitor extends Component {
     addOrder = (product) => (test) => () => {
         // console.log(test)
         let {orders ,totalPrice} = this.state
-        let findOrder = orders.find((item) => item.product.productId === product.productId)
+        let findOrder = orders.find((item) => item.product._id === product._id)
         if(findOrder) {
             findOrder.quantity++
         }else {
@@ -34,8 +34,8 @@ class Monitor extends Component {
     }
     delOrder(product) {
         let {orders ,totalPrice} = this.state
-        let findOrder = orders.find((item) => item.product.productId === product.productId)
-        orders = orders.filter((item) => item.product.productId !== product.productId)
+        let findOrder = orders.find((item) => item.product._id === product._id)
+        orders = orders.filter((item) => item.product._id !== product._id)
         totalPrice -= +findOrder.product.productPrice*findOrder.quantity
         this.setState({
             orders,
@@ -46,6 +46,13 @@ class Monitor extends Component {
     confirmOrders = () => () => {
         var self = this
         const {orders ,totalPrice} = this.state
+        if(totalPrice === 0) {
+            this.setState({
+                confirm: true,
+                msg: 'ยังไม่เลือกรายการ'
+            })
+            return;
+        }
         const request = {
             totalPrice,
             orders

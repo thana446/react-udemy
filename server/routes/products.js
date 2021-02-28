@@ -7,9 +7,25 @@ const {Product} = require('../models/products')
 
 
 router.get('/' ,async(req ,res ,next) => {
-  const products = await Product.find({} ,'-_id');
-  res.products = products;
-  return res.json(res.products)
+  try {
+    const products = await Product.find({});
+    res.json(products)
+  } catch (error) {
+    res.status(500).json({resultCode: "50000" ,resultDesc: error})
+  }
+
 })
+
+
+router.delete('/:id' ,async(req ,res ,next) => {
+  const {id} = req.params
+  try {
+    await Product.deleteOne({_id: id})
+    res.status(200).json({resultCode: "20000" ,resultDesc: "success"})
+  }catch(e) {
+    res.status(500).json({resultCode: "50000" ,resultDesc: "fail"})
+  }
+})
+
 
 module.exports = router;

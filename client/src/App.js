@@ -1,40 +1,31 @@
 import React, { Component } from 'react';
-import './App.scss';
-
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Monitor from './components/monitor/Monitor'
-import axios from 'axios'
-
+import {BrowserRouter ,Route ,Switch} from 'react-router-dom';
+import Home from './containers/Home';
+import About from './containers/About';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Order from './containers/order/Order';
+import Product from './containers/product/Product';
+import NotFound from './containers/error/NotFound';
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      products: []
-  }
-  }
 
-  componentDidMount() {
-    // fetch("http://localhost:3000/products" ,{method: "GET"}).then((res) => res.json()).then((res) => {
-    //   this.setState({
-    //     products: res
-    //   })
-    // })
-    axios.get("http://localhost:3000/products").then((res) => {
-      this.setState({
-        products: res.data
-      })
-    })
-    
+  renderRouter() {
+    return (<Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/about" component={About} />
+      <Route exact path="/orders" component={Order} />
+      <Route exact path="/products" component={Product} />
+      <Route component={NotFound} />
+    </Switch>)
   }
 
   render() {
     return (
-      <div>
-        <Header/>
-        <Monitor {...this.state}/>
-        <Footer company="AIS" email="thana446@cuben.postbox.in.th"/>
-      </div>
+        <BrowserRouter>
+          <Header />
+          {this.renderRouter()}
+          <Footer company="AIS" email="thana446@cuben.postbox.in.th"/>
+        </BrowserRouter>
     );
   }
 }
