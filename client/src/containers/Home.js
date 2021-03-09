@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import Monitor from '../components/monitor/Monitor'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {productFecth} from '../actions'
+
 
 class Home extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      products: []
-  }
   }
 
   componentDidMount() {
@@ -17,21 +17,21 @@ class Home extends Component {
     //     products: res
     //   })
     // })
-    axios.get("http://localhost:3000/products").then((res) => {
-      this.setState({
-        products: res.data
-      })
-    })
+    this.props.productFecth();
     
   }
 
   render() {
     return (
       <div>
-        <Monitor {...this.state}/>
+        <Monitor {...this.props}/>
       </div>
     );
   }
 }
 
-export default Home;
+function mapStateToProps({products}) {
+  return {products};
+}
+
+export default connect(mapStateToProps ,{productFecth})(Home);
