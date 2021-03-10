@@ -2,13 +2,12 @@ import React ,{Component} from 'react'
 import axios from 'axios'
 import ProductList from '../../components/product/ProductList'
 import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import {productFecth ,productDelete} from '../../actions'
 
 class Product extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            products: []
-        }
         this.delProduct = this.delProduct.bind(this)
         this.editProduct = this.editProduct.bind(this)
     }
@@ -18,16 +17,11 @@ class Product extends Component {
     }
 
     getProducts() {
-        axios.get("http://localhost:3000/products").then(res => {
-            const products = res.data
-            this.setState({products})
-        })
+        this.props.productFecth()
     }
 
     delProduct(id) {
-        axios.delete("http://localhost:3000/products/"+id).then(res => {
-            this.getProducts()
-        })
+        this.props.productDelete(id)
     }
 
     editProduct(id) {
@@ -49,10 +43,14 @@ class Product extends Component {
                         <button className="btn btn-success btn-sm title float-right" onClick={() => this.addProduct()}>เพิ่ม</button>
                     </div>
                 </div>
-                <ProductList products={this.state.products} delProduct={this.delProduct} editProduct={this.editProduct}/>
+                <ProductList products={this.props.products} delProduct={this.delProduct} editProduct={this.editProduct}/>
             </div>
         )
     }
 }
 
-export default withRouter(Product)
+const mapStateToProps = ({products}) => {
+    return {products}
+}
+
+export default withRouter(connect(mapStateToProps ,{productFecth ,productDelete})(Product))

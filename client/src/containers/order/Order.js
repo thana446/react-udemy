@@ -1,34 +1,27 @@
 import React ,{Component} from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import {orderFecth ,orderDelete} from '../../actions'
 
 class Order extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            orders: []
-        }
     }
     componentDidMount() {
         this.getOrders()
     }
 
     getOrders() {
-        axios.get("http://localhost:3000/orders").then(res => {
-            const {dataList: orders} = res.data
-            this.setState({
-                orders
-            })
-        })
+        this.props.orderFecth()
     }
 
     delOrder(id) {
-        axios.delete("http://localhost:3000/orders/"+id).then(res => {
-            this.getOrders()
-        })
+        this.props.orderDelete(id)
+        console.log(id)
     }
 
     showOrders() {
-        const { orders } = this.state
+        const { orders } = this.props
         return orders && orders.map(order => {
             let date = new Date(order.createdAt)
             return (<div key={order._id} className="col-3">
@@ -57,5 +50,7 @@ class Order extends Component {
         );
     }
 }
-
-export default Order
+const mapStateToProps = ({orders}) => {
+    return {orders}
+}
+export default connect(mapStateToProps ,{orderFecth ,orderDelete})(Order)
