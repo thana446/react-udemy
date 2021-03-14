@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Order from './containers/order/Order';
 import Product from './containers/product/Product';
 import NotFound from './containers/error/NotFound';
+import ProductEdit from './containers/product/ProductEdit';
 class App extends Component {
 
   renderRouter() {
@@ -15,6 +16,8 @@ class App extends Component {
       <Route exact path="/about" component={About} />
       <Route exact path="/orders" component={Order} />
       <Route exact path="/products" component={Product} />
+      <Route exact path="/products/add" component={ProductEdit} />
+      <Route exact path="/products/edit/:id" component={ProductEdit} />
       <Route component={NotFound} />
     </Switch>)
   }
