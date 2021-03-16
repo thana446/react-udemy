@@ -3,7 +3,7 @@ import axios from 'axios'
 import ProductList from '../../components/product/ProductList'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import {productFecth ,productDelete} from '../../actions'
+import {productsFecth ,productDelete} from '../../actions'
 
 class Product extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class Product extends Component {
     }
 
     getProducts() {
-        this.props.productFecth()
+        this.props.productsFecth()
     }
 
     delProduct(id) {
@@ -53,4 +53,4 @@ const mapStateToProps = ({products}) => {
     return {products}
 }
 
-export default withRouter(connect(mapStateToProps ,{productFecth ,productDelete})(Product))
+export default withRouter(connect(mapStateToProps ,{productsFecth ,productDelete})(Product))

@@ -2,13 +2,13 @@ import React ,{Component} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import FormField from '../common/FormField'
 
+const formFields = [
+    {label:"Product Name" ,name: "productName" ,type: "text" ,required: true},
+    {label:"Unit Price" ,name: "unitPrice" ,type: "number" ,required: true},
+    {label:"Thumbnail" ,name: "thumbnail" ,type: "text" ,required: true}
+]
 class ProductForm extends Component {
     renderFields() {
-        const formFields = [
-            {label:"Product Name" ,name: "productName" ,type: "text" ,required: true},
-            {label:"Unit Price" ,name: "unitPrice" ,type: "number" ,required: true},
-            {label:"Thumbnail" ,name: "thumbnail" ,type: "text" ,required: true}
-        ]
         return formFields.map((field) => (<Field key={field.name} {...field} component={FormField}></Field>))
     }
     render() {
@@ -23,4 +23,15 @@ class ProductForm extends Component {
     }
 }
 
-export default reduxForm({form: 'productForm'})(ProductForm)
+const validate = (values) => {
+    const errors = {}
+    formFields.forEach(({required ,name}) => {
+
+        if(!values[name] && required) {
+            errors[name] = "กรุณากรอกข้อมูลด้วยค่ะ"
+        }
+    })
+    return errors
+}
+
+export default reduxForm({validate , form: 'productForm'})(ProductForm)
