@@ -1,4 +1,5 @@
 import React ,{Component} from 'react'
+import { connect } from 'react-redux'
 import {Field, reduxForm} from 'redux-form'
 import FormField from '../common/FormField'
 
@@ -34,4 +35,8 @@ const validate = (values) => {
     return errors
 }
 
-export default reduxForm({validate , form: 'productForm'})(ProductForm)
+const mapStateToProps = ({form ,products}) => {
+    return {formValues: form.productForm ? form.productForm.values : null ,products }
+}
+
+export default connect(mapStateToProps)(reduxForm({validate , form: 'productForm'})(ProductForm))
