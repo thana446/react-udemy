@@ -1,7 +1,10 @@
 import React ,{Component} from 'react'
+import { connect } from 'react-redux'
 import ProductForm from '../../components/product/ProductForm'
+import {productFecth} from '../../actions'
 
 class ProductEdit extends Component {
+
     render() {
         const {match} = this.props
         return(
@@ -22,7 +25,7 @@ class ProductEdit extends Component {
                     (
                         <div>
                             <h2 className="title">เพิ่มแก้ไขสินค้า</h2>
-                            <ProductForm />
+                            <ProductForm productID={match.params.id} />
                         </div>
                     )
 

@@ -25,7 +25,7 @@ class Product extends Component {
     }
 
     editProduct(id) {
-        this.props.history.push('products/'+id)
+        this.props.history.push('products/edit/'+id)
     }
 
     addProduct() {

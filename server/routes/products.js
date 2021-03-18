@@ -16,6 +16,17 @@ router.get('/' ,async(req ,res ,next) => {
 
 })
 
+router.get('/:id' ,async(req ,res ,next) => {
+  const {id} = req.params
+  try {
+    const products = await Product.findById(id);
+    res.json(products)
+  } catch (error) {
+    res.status(500).json({resultCode: "50000" ,resultDesc: error})
+  }
+
+})
+
 
 router.delete('/:id' ,async(req ,res ,next) => {
   const {id} = req.params
