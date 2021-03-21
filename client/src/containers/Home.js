@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Monitor from '../components/monitor/Monitor'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {productFecth} from '../actions'
+import {productsFecth} from '../actions'
 
 
 class Home extends Component {
@@ -17,8 +17,7 @@ class Home extends Component {
     //     products: res
     //   })
     // })
-    this.props.productFecth();
-    
+    this.props.productsFecth();
   }
 
   render() {
@@ -34,4 +33,4 @@ function mapStateToProps({products}) {
   return {products};
 }
 
-export default connect(mapStateToProps ,{productFecth})(Home);
+export default connect(mapStateToProps ,{productsFecth})(Home);

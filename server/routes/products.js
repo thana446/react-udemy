@@ -16,6 +16,18 @@ router.get('/' ,async(req ,res ,next) => {
 
 })
 
+router.post('/' ,async(req ,res ,next) => {
+  const payload = req.body
+  try {
+    const product = await new Product(payload)
+    product.save()
+    res.json({resultCode: "20000" ,resultDesc: 'บันทึกสำเร็จ'})
+  } catch (error) {
+    res.status(500).json({resultCode: "50000" ,resultDesc: error})
+  }
+
+})
+
 router.get('/:id' ,async(req ,res ,next) => {
   const {id} = req.params
   try {
@@ -27,6 +39,17 @@ router.get('/:id' ,async(req ,res ,next) => {
 
 })
 
+router.put('/:id' ,async(req ,res ,next) => {
+  const {id} = req.params
+  const {productName ,productPrice ,thumbnail} = req.body
+  try {
+    await Product.updateOne({_id: id} ,{$set: {productName ,productPrice ,thumbnail}})
+    res.json({resultCode: "20000" ,resultDesc: 'บันทึกสำเร็จ'})
+  } catch (error) {
+    res.status(500).json({resultCode: "50000" ,resultDesc: error})
+  }
+
+})
 
 router.delete('/:id' ,async(req ,res ,next) => {
   const {id} = req.params
