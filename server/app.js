@@ -6,16 +6,13 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('./public/javascripts/CorsFilter');
 
-var indexRouter = require('./routes/index');
+// var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
 var ordersRouter = require('./routes/orders');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,7 +23,7 @@ app.use(cors);
 //connect db
 mongoose.connect('mongodb://localhost:27017/react' ,{useNewUrlParser: true})
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
 

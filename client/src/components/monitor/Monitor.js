@@ -57,7 +57,7 @@ class Monitor extends Component {
             totalPrice,
             orders
         }
-        axios.post("http://localhost:3000/orders" ,request).then(res => {
+        axios.post(`${process.env.REACT_APP_URL}/orders` ,request).then(res => {
             console.log(res.data)
             this.setState({
                 totalPrice: 0,
